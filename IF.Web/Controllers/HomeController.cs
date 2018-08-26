@@ -19,7 +19,6 @@ namespace IF.Web.Controllers
         {
             _event = @event;
         }
-
         public ActionResult Index()
         {
             //standard data
@@ -31,7 +30,6 @@ namespace IF.Web.Controllers
 
             return View(events);
         }
-
         [System.Web.Mvc.HttpPost]
         public ActionResult Index(Eventspresentationmodel @event)
         {
@@ -44,7 +42,6 @@ namespace IF.Web.Controllers
 
             return View(events);
         }
-
         private Eventspresentationmodel MappEvent(string url, string param)
         {
             var obj = _event.GetEvents(url, param);
