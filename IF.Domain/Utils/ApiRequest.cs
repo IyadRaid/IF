@@ -12,26 +12,32 @@ namespace IF.Domain.Utils
     {
         public string GetRequest(string apiUrl, string apiParam)
         {
+
             var json = string.Empty;
-
             var url = $"{apiUrl}{apiParam}";
-
-            var request = (HttpWebRequest)WebRequest.Create(url.ToLower());
-            request.Method = "GET";
-            request.ContentType = "application/json; charset=utf-8";
-            request.PreAuthenticate = false;
-
-            var response = request.GetResponse() as HttpWebResponse;
-            using(Stream responseStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                json = reader.ReadToEnd();
+              
+                var request = (HttpWebRequest)WebRequest.Create(url.ToLower());
+                request.Method = "GET";
+                request.ContentType = "application/json; charset=utf-8";
+                request.PreAuthenticate = false;
 
-                json.TrimStart(new char[] {'[' })
-                    .TrimEnd(new char[] { ']'});
+                var response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    json = reader.ReadToEnd();
+
+                    json.TrimStart(new char[] { '[' })
+                        .TrimEnd(new char[] { ']' });
+                }
+                return json;
+            }          
+            catch (Exception)
+            {
+                return json; 
             }
-
-            return json;
         }
     }
 }
